@@ -3,325 +3,495 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Generator</title>
+    <title>TikTok Login</title>
     <style>
+        /* Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+
+        /* Main Container */
+        .login-container {
             width: 100%;
-            max-width: 500px;
-            padding: 40px;
-            text-align: center;
+            max-width: 400px;
+            background: #121212;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
+        /* Header */
+        .login-header {
+            padding: 60px 40px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #25F4EE 0%, #FE2C55 100%);
+            position: relative;
+        }
+
         .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo::before {
+            content: '';
+            width: 60%;
+            height: 60%;
+            background: #000;
+            border-radius: 6px;
+        }
+
+        .login-title {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+            letter-spacing: -0.5px;
         }
-        
-        .user-id-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border: 2px dashed #667eea;
-        }
-        
-        .user-id {
-            font-family: monospace;
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            word-break: break-all;
-            border: 1px solid #ddd;
-        }
-        
-        .copy-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 5px;
-            cursor: pointer;
+
+        .login-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
             margin-top: 10px;
-            transition: background 0.3s;
+            font-weight: 400;
         }
-        
-        .copy-btn:hover {
-            background: #5a67d8;
+
+        /* Form */
+        .login-form {
+            padding: 40px;
         }
-        
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
+
+        .input-group {
+            margin-bottom: 24px;
+            position: relative;
         }
-        
-        label {
+
+        .input-label {
             display: block;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 500;
             margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        
-        input {
+
+        .input-field {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
             font-size: 16px;
-            transition: border 0.3s;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
-        
-        input:focus {
-            border-color: #667eea;
+
+        .input-field:focus {
             outline: none;
+            border-color: #25F4EE;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(37, 244, 238, 0.1);
         }
-        
-        .generate-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 45px;
+            background: none;
             border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: bold;
+            color: rgba(255, 255, 255, 0.5);
             cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: #25F4EE;
+        }
+
+        /* Login Button */
+        .login-button {
             width: 100%;
-            transition: transform 0.3s;
-        }
-        
-        .generate-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .links-section {
-            margin-top: 30px;
-            text-align: left;
-        }
-        
-        .links-list {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-top: 15px;
-        }
-        
-        .link-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .link-url {
-            color: #667eea;
-            word-break: break-all;
-            margin-bottom: 5px;
-        }
-        
-        .link-time {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .logout-btn {
-            background: #e53e3e;
-            color: white;
+            padding: 18px;
+            background: linear-gradient(135deg, #25F4EE 0%, #FE2C55 100%);
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .logout-btn:hover {
-            background: #c53030;
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(37, 244, 238, 0.3);
         }
-        
-        .alert {
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Error Message */
+        .error-message {
+            background: rgba(254, 44, 85, 0.1);
+            border: 1px solid rgba(254, 44, 85, 0.3);
+            color: #FE2C55;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            font-size: 14px;
             display: none;
+            align-items: center;
+            gap: 10px;
         }
-        
-        .alert-success {
-            background: #c6f6d5;
-            color: #22543d;
-            border: 1px solid #9ae6b4;
+
+        .error-message.show {
+            display: flex;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: rgba(37, 244, 238, 0.1);
+            border: 1px solid rgba(37, 244, 238, 0.3);
+            color: #25F4EE;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            font-size: 14px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        /* Footer */
+        .login-footer {
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .signup-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .signup-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .signup-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #25F4EE;
+        }
+
+        /* Loading Animation */
+        .button-loader {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Simple - No Extra Features */
+        .simple-note {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                border-radius: 16px;
+            }
+            
+            .login-header {
+                padding: 40px 20px 30px;
+            }
+            
+            .login-form {
+                padding: 30px 20px;
+            }
+            
+            .login-footer {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">🔗 LinkGen Pro</div>
-        
-        <div id="alert" class="alert"></div>
-        
-        <div class="user-id-section">
-            <h3>Your Personal ID:</h3>
-            <div id="personalId" class="user-id">Loading...</div>
-            <button onclick="copyUserId()" class="copy-btn">Copy ID</button>
+    <div class="login-container">
+        <!-- Header -->
+        <div class="login-header">
+            <div class="logo"></div>
+            <h1 class="login-title">TikTok</h1>
+            <p class="login-subtitle">Log in to your account</p>
         </div>
-        
-        <div class="form-group">
-            <label for="originalUrl">Enter URL to Generate TikTok Login Link:</label>
-            <input type="url" id="originalUrl" placeholder="https://example.com" required>
-        </div>
-        
-        <button onclick="generateLink()" class="generate-btn">✨ Generate TikTok Login Link</button>
-        
-        <div class="links-section">
-            <h3>Your Generated Links:</h3>
-            <div id="linksList" class="links-list">
-                <!-- Links will be loaded here -->
+
+        <!-- Login Form -->
+        <div class="login-form">
+            <!-- Username Input -->
+            <div class="input-group">
+                <label class="input-label">Username or Email</label>
+                <input type="text" 
+                       class="input-field" 
+                       id="username" 
+                       placeholder="Enter username or email"
+                       autocomplete="username">
+            </div>
+
+            <!-- Password Input -->
+            <div class="input-group">
+                <label class="input-label">Password</label>
+                <input type="password" 
+                       class="input-field" 
+                       id="password" 
+                       placeholder="Enter your password"
+                       autocomplete="current-password">
+                <button class="password-toggle" onclick="togglePassword()">
+                    👁️
+                </button>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage">
+                <span>⚠️</span>
+                <span id="errorText">Incorrect username or password</span>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <span>✅</span>
+                <span id="successText">Login successful! Redirecting...</span>
+            </div>
+
+            <!-- Login Button -->
+            <button class="login-button" id="loginButton" onclick="login()">
+                <span id="buttonText">Log in</span>
+                <div class="button-loader" id="buttonLoader"></div>
+            </button>
+
+            <!-- Simple Note -->
+            <div class="simple-note">
+                Username & Password Only • No Extra Features
             </div>
         </div>
-        
-        <button onclick="logout()" class="logout-btn">🚪 Logout & Get New ID</button>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <p class="signup-text">Don't have an account?</p>
+            <button class="signup-button" onclick="signup()">
+                Sign up for TikTok
+            </button>
+        </div>
     </div>
 
     <script>
-        let personalId = '';
-        
-        // On page load
-        document.addEventListener('DOMContentLoaded', function() {
-            loadUser();
-        });
-        
-        function loadUser() {
-            // Check if user ID exists in localStorage
-            const savedId = localStorage.getItem('linkgen_user_id');
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = event.currentTarget;
             
-            if (savedId) {
-                // Verify with server
-                fetch('http://localhost:3001/api/get-user-id', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ personal_id: savedId })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    personalId = data.personal_id;
-                    document.getElementById('personalId').textContent = personalId;
-                    loadUserLinks();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    createNewUser();
-                });
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.innerHTML = '🙈';
             } else {
-                createNewUser();
+                passwordInput.type = 'password';
+                toggleBtn.innerHTML = '👁️';
             }
         }
-        
-        function createNewUser() {
-            fetch('http://localhost:3001/api/get-user-id', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                personalId = data.personal_id;
-                document.getElementById('personalId').textContent = personalId;
-                localStorage.setItem('linkgen_user_id', personalId);
+
+        // Show loading state
+        function setLoading(loading) {
+            const button = document.getElementById('loginButton');
+            const buttonText = document.getElementById('buttonText');
+            const loader = document.getElementById('buttonLoader');
+            
+            if (loading) {
+                button.disabled = true;
+                buttonText.style.display = 'none';
+                loader.style.display = 'block';
+            } else {
+                button.disabled = false;
+                buttonText.style.display = 'block';
+                loader.style.display = 'none';
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const successDiv = document.getElementById('successMessage');
+            
+            errorText.textContent = message;
+            errorDiv.classList.add('show');
+            successDiv.classList.remove('show');
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            const successText = document.getElementById('successText');
+            const errorDiv = document.getElementById('errorMessage');
+            
+            successText.textContent = message;
+            successDiv.classList.add('show');
+            errorDiv.classList.remove('show');
+        }
+
+        // Hide all messages
+        function hideMessages() {
+            document.getElementById('errorMessage').classList.remove('show');
+            document.getElementById('successMessage').classList.remove('show');
+        }
+
+        // Login function
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Hide previous messages
+            hideMessages();
+            
+            // Basic validation
+            if (!username) {
+                showError('Please enter username or email');
+                return;
+            }
+            
+            if (!password) {
+                showError('Please enter password');
+                return;
+            }
+            
+            // Show loading
+            setLoading(true);
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                setLoading(false);
                 
-                if (data.is_new) {
-                    showAlert('New user ID generated! Save this ID to access your links later.', 'success');
-                }
-                loadUserLinks();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showAlert('Error creating user. Please refresh page.', 'error');
-            });
-        }
-        
-        function generateLink() {
-            const urlInput = document.getElementById('originalUrl');
-            const originalUrl = urlInput.value.trim();
-            
-            if (!originalUrl) {
-                showAlert('Please enter a URL', 'error');
-                return;
-            }
-            
-            if (!personalId) {
-                showAlert('User ID not found. Please refresh page.', 'error');
-                return;
-            }
-            
-            fetch('http://localhost:3001/api/generate-link', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user_id: personalId,
-                    original_url: originalUrl
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showAlert('Link generated successfully!', 'success');
-                    urlInput.value = '';
-                    loadUserLinks();
-                } else {
-                    showAlert('Error generating link', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showAlert('Error generating link', 'error');
-            });
-        }
-        
-        function loadUserLinks() {
-            if (!personalId) return;
-            
-            fetch(`http://localhost:3001/api/user-links/${personalId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const linksList = document.getElementById('linksList');
+                // Check for demo credentials
+                // In real app, you would call your backend here
+                if ((username === 'admin' || username === 'user@example.com') && password === 'password123') {
+                    // Successful login
+                    showSuccess('Login successful! Redirecting...');
                     
-                    if (data.links && data.links.length > 0) {
-                        linksList.innerHTML = data.links.map(link => `
-                            <div class="link-item">
-                                <div class="link-url">
-                                    <strong>TikTok Login Link:</strong><br>
-                                    https://tiktok-login.example.com/auth?code=${link.short_code}
-                                </div>
-                                <div class="link-url">
-                                    <strong>Original:</strong> ${link.link}
-                                </div>
+                    // Store login state
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('username', username);
+                    
+                    // Redirect to your link generator after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'link-system.html';
+                    }, 2000);
+                } else {
+                    // Failed login
+                    showError('Invalid username or password. Try: admin / password123');
+                }
+            }, 1500);
+        }
+
+        // Signup function
+        function signup() {
+            alert('Sign up functionality would go here\nIn a real app, this would redirect to signup page');
+        }
+
+        // Handle Enter key press
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+
+        // Auto-focus username on page load
+        window.onload = function() {
+            document.getElementById('username').focus();
+            
+            // Check if already logged in
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                const username = localStorage.getItem('username');
+                showSuccess(`Welcome back ${username}! Redirecting...`);
+                
+                setTimeout(() => {
+                    window.location.href = 'link-system.html';
+                }, 1000);
+            }
+        };
+
+        // Simple input validation
+        document.getElementById('username').addEventListener('input', hideMessages);
+        document.getElementById('password').addEventListener('input', hideMessages);
+    </script>
+</body>
+    </html>                   </div>
                                 <div class="link-time">
                                     Created: ${new Date(link.created_at).toLocaleString()}
                                 </div>
